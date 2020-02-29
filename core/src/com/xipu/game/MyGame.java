@@ -18,17 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MyGame extends ApplicationAdapter {
 
-	MouseInputProcessor inputProcessor;
-	ShapeRenderer debugRenderer;
-	OrthographicCamera camera;
 	Stage stage;
-
-	// Objects used
-	Animation<TextureRegion> walkAnimation; // Must declare frame type (TextureRegion)
-	Texture walkSheet;
-	SpriteBatch spriteBatch;
-
-	float stateTime;
 
 	@Override
 	public void create () {
@@ -39,37 +29,6 @@ public class MyGame extends ApplicationAdapter {
 		MyActor actor = new MyActor("gcc_sprite_sheet.png");
 		stage.addActor(actor);
 		stage.setKeyboardFocus(actor);
-//		test();
-	}
-
-	void test(){
-		// Load the sprite sheet as a Texture
-		walkSheet = new Texture(Gdx.files.internal("gcc_sprite_sheet.png"));
-
-		// Use the split utility method to create a 2D array of TextureRegions. This is
-		// possible because this sprite sheet contains frames of equal size and they are
-		// all aligned.
-		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-				walkSheet.getWidth() / 4,
-				walkSheet.getHeight() / 4);
-
-		// Place the regions into a 1D array in the correct order, starting from the top
-		// left, going across first. The Animation constructor requires a 1D array.
-		TextureRegion[] walkFrames = new TextureRegion[4 * 4];
-		int index = 0;
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				walkFrames[index++] = tmp[i][j];
-			}
-		}
-
-		// Initialize the Animation with the frame interval and array of frames
-		walkAnimation = new Animation<TextureRegion>(0.25f, walkFrames);
-
-		// Instantiate a SpriteBatch for drawing and reset the elapsed animation
-		// time to 0
-		spriteBatch = new SpriteBatch();
-		stateTime = 0f;
 	}
 
 	@Override
