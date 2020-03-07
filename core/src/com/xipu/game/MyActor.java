@@ -8,11 +8,11 @@ public class MyActor extends Actor {
 
     GraphicsComponent graphicsComponent;
     InputComponent inputComponent;
+    CollisionComponent collisionComponent;
 
     public MyActor(String path){
         graphicsComponent = new GraphicsComponent(this, path);
         inputComponent = new InputComponent(this);
-
         this.addListener(inputComponent);
     }
 
@@ -41,12 +41,12 @@ public class MyActor extends Actor {
         inputComponent.update(dt);
     }
 
-    void stopAnimation(){
-        graphicsComponent.resetToFirstFrame();
+    void stopAnimation(InputComponent.DIRECTION direction){
+        graphicsComponent.resetToFirstFrame(direction);
     }
 
-    void runAnimation(float dt){
-        graphicsComponent.update(dt);
+    void runAnimation(float dt, InputComponent.DIRECTION direction){
+        graphicsComponent.update(dt, direction);
     }
 
 }
