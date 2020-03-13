@@ -32,4 +32,8 @@ public final class StageUtility {
         return textureMap.get(path);
     }
 
+    public void switchStage(){
+
+    }
+
 }

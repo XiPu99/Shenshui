@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 class GraphicsComponent {
     public static final int SPRITE_SHEET_COL_NUMS = 4;
@@ -19,9 +20,9 @@ class GraphicsComponent {
     Animation<TextureRegion> rightWalkAnimation;
     Animation<TextureRegion> upWalkAnimation;
     float stateTime = 0; // time used for determining which frame to draw in the sprite sheet
-    MyActor parentActor;
+    Actor parentActor;
 
-    public GraphicsComponent(MyActor parentActor, String path) {
+    public GraphicsComponent(Actor parentActor, String path) {
         this.parentActor = parentActor;
         walkSheet = new Texture(Gdx.files.internal(path));
         TextureRegion[][] tmp = TextureRegion.split(walkSheet,
@@ -39,18 +40,18 @@ class GraphicsComponent {
         parentActor.setBounds(getX(), getY(), getWidth(), getHeight());
     }
 
-    void update(float dt, InputComponent.DIRECTION direction) {
+    void update(float dt, PlayerInputComponent.DIRECTION direction) {
         stateTime += dt;
         if (stateTime >= 1f) stateTime = 0f;
         setKeyFrameByStateTime(direction);
     }
 
-    private void setKeyFrameByStateTime(InputComponent.DIRECTION direction) {
+    private void setKeyFrameByStateTime(PlayerInputComponent.DIRECTION direction) {
         Animation<TextureRegion> walkAnimation = getWalkAnimationByDirection(direction);
         currentFrame.setRegion(walkAnimation.getKeyFrame(stateTime, true));
     }
 
-    private Animation<TextureRegion> getWalkAnimationByDirection(InputComponent.DIRECTION direction){
+    private Animation<TextureRegion> getWalkAnimationByDirection(PlayerInputComponent.DIRECTION direction){
         Animation<TextureRegion> walkAnimation;
 
         switch (direction){
@@ -69,7 +70,7 @@ class GraphicsComponent {
         return walkAnimation;
     }
 
-    void resetToFirstFrame(InputComponent.DIRECTION direction) {
+    void resetToFirstFrame(PlayerInputComponent.DIRECTION direction) {
         stateTime = 0;
         setKeyFrameByStateTime(direction);
     }
