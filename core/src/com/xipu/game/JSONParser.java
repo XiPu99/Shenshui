@@ -36,7 +36,6 @@ public final class JSONParser {
     }
 
 
-
     private static TileActor buildTile(int tag){
         return new TileActor("floor.png");
     }
