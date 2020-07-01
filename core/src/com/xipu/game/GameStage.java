@@ -1,5 +1,7 @@
 package com.xipu.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -34,4 +36,15 @@ public class GameStage extends Stage {
     }
 
 
+
+    @Override
+    public boolean keyDown(int keyCode) {
+        switch (keyCode){
+            case Input.Keys.ESCAPE:
+                System.exit(0);
+//                Gdx.app.exit();
+                break;
+        }
+        return super.keyDown(keyCode);
+    }
 }

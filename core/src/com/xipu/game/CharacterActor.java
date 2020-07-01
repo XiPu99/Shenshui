@@ -21,12 +21,6 @@ public abstract class CharacterActor extends Actor implements CanCollide {
                         graphicsComponent.getHeight()
                 )
         );
-        System.out.println(new Rectangle(
-                graphicsComponent.getX(),
-                graphicsComponent.getY(),
-                graphicsComponent.getWidth(),
-                graphicsComponent.getHeight()
-        ));
     }
 
     @Override

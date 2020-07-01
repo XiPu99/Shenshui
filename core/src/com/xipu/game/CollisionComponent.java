@@ -25,7 +25,6 @@ public class CollisionComponent {
             }
             if (actor instanceof CanCollide){
                 if (this.checkCollisionWith((CanCollide) actor)){
-                    System.out.println(actor);
                     return true;
                 }
             }

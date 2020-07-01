@@ -61,6 +61,9 @@ public class PlayerInputComponent extends InputComponent implements MouseInterac
             case Input.Keys.W:
                 upMove = true;
                 break;
+            case Input.Keys.ESCAPE:
+                disableMovement();
+                break;
         }
         return true;
     }
@@ -111,6 +114,7 @@ public class PlayerInputComponent extends InputComponent implements MouseInterac
 
     @Override
     public void update(float dt) {
+        if(disabled) return;
         float dx = 0, dy = 0;
         if (downMove) {
             myActor.runAnimation(dt, DIRECTION.DOWN);
@@ -138,15 +142,10 @@ public class PlayerInputComponent extends InputComponent implements MouseInterac
         }
     }
 
-    private void checkCollision() {
-        if (leftMove || downMove || rightMove || upMove) {
-
-        }
-    }
 
     private void disableMovement() {
         disabled = true;
-        reset();
+//        reset();
     }
 
     public void reset() {

@@ -9,4 +9,8 @@ public class GUI {
         DialogBox dialogBox = new DialogBox();
         stage.addActor(dialogBox);
     }
+
+    public static void showMenu(){
+
+    }
 }
