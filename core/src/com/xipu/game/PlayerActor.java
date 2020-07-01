@@ -35,4 +35,19 @@ public class PlayerActor extends CharacterActor {
         //
     }
 
+
+    public boolean checkIfThereIsAnyCollision(){
+        return this.collisionComponent.checkCollisionHelper();
+    }
+
+    @Override
+    public boolean canCollideWith(CanCollide myActor) {
+        return this.collisionComponent.checkCollisionWith(myActor);
+//        return this.collisionComponent.collisionArea.overlaps(myActor.getCollisionComponent().collisionArea);
+    }
+
+    @Override
+    public CollisionComponent getCollisionComponent() {
+        return this.collisionComponent;
+    }
 }

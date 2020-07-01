@@ -14,25 +14,25 @@ public final class StageUtility {
     static Stage currentStage;
     static Map<String, Texture> textureMap = new HashMap<>();
 
-    public static void changeCursor(){
+    public static void changeCursor() {
         Pixmap pm = new Pixmap(Gdx.files.internal("gcc_sprite_sheet.png"));
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
         pm.dispose();
     }
 
-    public static void setDefaultCursor(){
+    public static void setDefaultCursor() {
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
     }
 
-    public static Texture loadTextureFromPath(String path){
-        if(!textureMap.containsKey(path)){
+    public static Texture loadTextureFromPath(String path) {
+        if (!textureMap.containsKey(path)) {
             textureMap.put(path, new Texture(Gdx.files.internal(path)));
         }
 
         return textureMap.get(path);
     }
 
-    public void switchStage(){
+    public void switchStage() {
 
     }
 

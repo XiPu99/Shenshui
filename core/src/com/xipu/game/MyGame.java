@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -25,11 +26,14 @@ public class MyGame extends ApplicationAdapter {
 		stage = new GameStage(viewport);
 		Gdx.input.setInputProcessor(stage);
 
-		PlayerActor actor = new PlayerActor("gcc_sprite_sheet.png");
+		Actor actor = new PlayerActor("gcc_sprite_sheet.png");
+		Actor npcActor = new NPCActor("gcc_sprite_sheet.png");
+		npcActor.setPosition(400, 400);
 		stage.addActor(actor);
+		stage.addActor(npcActor);
 		stage.setKeyboardFocus(actor);
 		actor.setPosition(100, 100);
-
+//		System.out.println(stage.screenToStageCoordinates(actor.get));
 
 		GUI.stage = stage;
 //		GUI.showDialog(stage);

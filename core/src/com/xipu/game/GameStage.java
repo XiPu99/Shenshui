@@ -1,6 +1,8 @@
 package com.xipu.game;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.HashMap;
@@ -19,16 +21,17 @@ public class GameStage extends Stage {
         tileMap = new HashMap<>();
     }
 
-    private void checkCollision(){
+    private void checkCollision() {
 //        matrix[0][0]
     }
 
-    private void loadTileMapFromJSON(){
+    private void loadTileMapFromJSON() {
 
     }
 
-    private void buildStage(){
+    private void buildStage() {
         tileMap.values().forEach(list -> list.forEach(this::addActor));
     }
+
 
 }

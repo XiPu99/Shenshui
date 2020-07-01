@@ -132,6 +132,10 @@ public class PlayerInputComponent extends InputComponent implements MouseInterac
             dy = SPEED * dt;
         }
         myActor.moveBy(dx, dy);
+        // add collision check here
+        if (myActor.checkIfThereIsAnyCollision()){
+            myActor.moveBy(-dx, -dy);
+        }
     }
 
     private void checkCollision() {

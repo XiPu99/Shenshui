@@ -15,4 +15,14 @@ public class NPCActor extends CharacterActor {
 
 
     }
+
+    @Override
+    public boolean canCollideWith(CanCollide myActor) {
+        return this.collisionComponent.checkCollisionWith(myActor);
+    }
+
+    @Override
+    public CollisionComponent getCollisionComponent() {
+        return this.collisionComponent;
+    }
 }
