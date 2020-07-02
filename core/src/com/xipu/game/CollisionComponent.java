@@ -17,14 +17,18 @@ public class CollisionComponent {
         this.collisionArea = collisionArea;
     }
 
+    /**
+     * This method will check collision with every other actor in the stage
+     * @return if is colliding with anything
+     */
     public boolean checkCollisionHelper() {
         Array<Actor> actors = canCollideActor.getStage().getActors();
-        for (Actor actor: actors){
-            if (actor == canCollideActor){ // don't check collision with self
+        for (Actor actor : actors) {
+            if (actor == canCollideActor) { // avoid checking collision with self
                 continue;
             }
-            if (actor instanceof CanCollide){
-                if (this.checkCollisionWith((CanCollide) actor)){
+            if (actor instanceof CanCollide) {
+                if (this.checkCollisionWith((CanCollide) actor)) {
                     return true;
                 }
             }
@@ -32,22 +36,48 @@ public class CollisionComponent {
         return false;
     }
 
-    public void moveCollisionAreaBy(float dx, float dy){
+    public void moveCollisionAreaBy(float dx, float dy) {
         float x = collisionArea.getX();
         float y = collisionArea.getY();
         collisionArea.setPosition(x + dx, y + dy);
     }
 
-    public void setCollisionAreaPosition(float x, float y){
+    public boolean canMoveByWithoutCollision(float dx, float dy) {
+        Rectangle newArea = new Rectangle(this.collisionArea);
+        newArea.setPosition(collisionArea.x + dx, collisionArea.y + dy);
+        return checkRectCollision(newArea);
+    }
+
+    public boolean checkRectCollision(Rectangle rectangle){
+        Array<Actor> actors = canCollideActor.getStage().getActors();
+        for (Actor actor : actors) {
+            if (actor == canCollideActor) { // avoid checking collision with self
+                continue;
+            }
+            if (actor instanceof CanCollide) {
+                if (rectangle.overlaps(((CanCollide) actor).getCollisionComponent().collisionArea)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void setCollisionAreaPosition(float x, float y) {
         collisionArea.setPosition(x, y);
     }
 
-//    public boolean canCollideWith(CharacterActor myActor){
-//        return collisionArea.overlaps(myActor.collisionComponent.collisionArea);
-//    }
 
-    public boolean checkCollisionWith(CanCollide actor){
-        return this.collisionArea.overlaps(actor.getCollisionComponent().collisionArea);
+    public boolean checkCollisionWith(CanCollide actor) {
+        boolean result = this.collisionArea.overlaps(actor.getCollisionComponent().collisionArea);
+
+        if (result) {
+            actor.onCollision(((PlayerActor) canCollideActor).getWalkDirection());
+        } else {
+            actor.leaveCollision();
+        }
+
+        return result;
     }
 
 }

@@ -25,7 +25,7 @@ public abstract class CharacterActor extends Actor implements CanCollide {
 
     @Override
     protected void positionChanged() {
-        graphicsComponent.setPosition(getX(),getY());
+        graphicsComponent.setPosition(getX(), getY());
         collisionComponent.setCollisionAreaPosition(getX(), getY());
         super.positionChanged();
     }
@@ -40,8 +40,17 @@ public abstract class CharacterActor extends Actor implements CanCollide {
     }
 
     @Override
-    public void moveBy(float x, float y){
+    public void moveBy(float x, float y) {
         super.moveBy(x, y);
         collisionComponent.moveCollisionAreaBy(x, y);
     }
+
+    void stopAnimation(PlayerInputComponent.DIRECTION direction) {
+        graphicsComponent.resetToFirstFrame(direction);
+    }
+
+    void runAnimation(float dt, PlayerInputComponent.DIRECTION direction) {
+        graphicsComponent.update(dt, direction);
+    }
+
 }

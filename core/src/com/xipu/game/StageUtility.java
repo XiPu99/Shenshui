@@ -36,4 +36,9 @@ public final class StageUtility {
 
     }
 
+    public static void spawnNPCAtRandomLocations() {
+        //TODO: fill in the logic here
+    }
+
+
 }

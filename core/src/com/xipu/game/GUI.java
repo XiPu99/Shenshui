@@ -7,6 +7,7 @@ public class GUI {
 
     public static void showDialog(){
         DialogBox dialogBox = new DialogBox();
+        // TODO: add a getter method to get current stage
         stage.addActor(dialogBox);
     }
 

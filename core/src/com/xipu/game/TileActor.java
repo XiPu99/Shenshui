@@ -4,17 +4,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class TileActor extends Actor {
+public class TileActor extends Actor implements CanCollide {
 
     private GraphicsComponent graphicsComponent;
     private CollisionComponent collisionComponent;
 
     public TileActor(String path) {
         this.graphicsComponent = new GraphicsComponent(this, fix(path));
-    }
-
-    public TileActor buildCollision(){
-        return this;
     }
 
     public void test(){
@@ -37,4 +33,22 @@ public class TileActor extends Actor {
         this.drawDebugBounds(shape);
     }
 
+    public void onCollide(){
+        // play sound
+    }
+
+    @Override
+    public void onCollision(PlayerInputComponent.DIRECTION direction) {
+
+    }
+
+    @Override
+    public void leaveCollision() {
+
+    }
+
+    @Override
+    public CollisionComponent getCollisionComponent() {
+        return null;
+    }
 }

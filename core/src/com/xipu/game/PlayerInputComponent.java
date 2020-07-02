@@ -135,10 +135,13 @@ public class PlayerInputComponent extends InputComponent implements MouseInterac
             myActor.runAnimation(dt, DIRECTION.UP);
             dy = SPEED * dt;
         }
-        myActor.moveBy(dx, dy);
-        // add collision check here
-        if (myActor.checkIfThereIsAnyCollision()){
-            myActor.moveBy(-dx, -dy);
+
+        if (!myActor.checkIfThereIsAnyCollision(dx, dy)){
+            myActor.moveBy(dx, dy);
+        }
+        else if(myActor.checkIfThereIsAnyCollision()){ // possibly due to floating point precision
+            System.out.println(dx + "," + dy);
+            myActor.moveBy(-dx/10, -dy/10);
         }
     }
 
@@ -153,5 +156,23 @@ public class PlayerInputComponent extends InputComponent implements MouseInterac
         downMove = false;
         leftMove = false;
         rightMove = false;
+    }
+
+    public DIRECTION getWalkDirection(){
+        if (downMove) {
+            return DIRECTION.DOWN;
+        }
+        else if (leftMove) {
+            return DIRECTION.LEFT;
+        }
+        else if (rightMove) {
+            return DIRECTION.RIGHT;
+        }
+        else if (upMove){
+            return DIRECTION.UP;
+        }
+        else{
+            return null;
+        }
     }
 }

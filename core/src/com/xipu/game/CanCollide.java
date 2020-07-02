@@ -2,7 +2,8 @@ package com.xipu.game;
 
 public interface CanCollide {
 
-    boolean canCollideWith(CanCollide myActor);
+    void onCollision(PlayerInputComponent.DIRECTION direction);
+    void leaveCollision();
 
     CollisionComponent getCollisionComponent();
 }
