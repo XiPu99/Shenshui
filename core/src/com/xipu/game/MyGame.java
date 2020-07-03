@@ -3,12 +3,18 @@ package com.xipu.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.util.List;
+import java.util.Map;
 
 public class MyGame extends ApplicationAdapter {
 
@@ -26,6 +32,11 @@ public class MyGame extends ApplicationAdapter {
 		stage = new GameStage(viewport);
 		Gdx.input.setInputProcessor(stage);
 
+		List<TileActor> map = JSONParser.loadMapFromJSON("test.json");
+		for (TileActor actor1: map){
+			stage.addActor(actor1);
+		}
+
 		Actor actor = new PlayerActor("gcc_sprite_sheet.png");
 		Actor npcActor = new NPCActor("gcc_sprite_sheet.png");
 		npcActor.setPosition(400, 400);
@@ -35,8 +46,14 @@ public class MyGame extends ApplicationAdapter {
 		actor.setPosition(100, 100);
 //		System.out.println(stage.screenToStageCoordinates(actor.get));
 
-		GUI.stage = stage;
+//		GUI.stage = stage;
 //		GUI.showDialog(stage);
+
+
+
+
+//		GUI.showTextInput(stage);
+//		System.out.println(map);
 	}
 
 	@Override
@@ -48,13 +65,13 @@ public class MyGame extends ApplicationAdapter {
 //		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
 //			stage.getCamera().translate(3, 0, 0);
 //		}
-
+//		stage.setDebugAll(true);
 		stage.draw();
 
 	}
 	
 	@Override
 	public void dispose () {
-
+		stage.dispose();
 	}
 }

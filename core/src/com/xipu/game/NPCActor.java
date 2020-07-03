@@ -25,15 +25,15 @@ public class NPCActor extends CharacterActor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(disabled){
-//            this.moveBy(0, speed * delta);
-            this.stopAnimation(PlayerInputComponent.DIRECTION.DOWN);
-        }
-        else{
-            this.moveBy(0, - speed * delta);
-            this.runAnimation(delta, PlayerInputComponent.DIRECTION.DOWN);
-
-        }
+//        if(disabled){
+////            this.moveBy(0, speed * delta);
+//            this.stopAnimation(PlayerInputComponent.DIRECTION.DOWN);
+//        }
+//        else{
+//            this.moveBy(0, - speed * delta);
+//            this.runAnimation(delta, PlayerInputComponent.DIRECTION.DOWN);
+//
+//        }
     }
 
     @Override

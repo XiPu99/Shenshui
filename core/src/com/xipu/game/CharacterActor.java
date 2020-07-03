@@ -32,11 +32,13 @@ public abstract class CharacterActor extends Actor implements CanCollide {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+//        batch.begin();
         graphicsComponent.draw(batch);
         this.setDebug(true);
-        ShapeRenderer shape = new ShapeRenderer();
-        shape.begin(ShapeRenderer.ShapeType.Line);
-        this.drawDebugBounds(shape);
+//        ShapeRenderer shape = new ShapeRenderer();
+//        shape.begin(ShapeRenderer.ShapeType.Line);
+////        this.drawDebugBounds(shape);
+//        shape.end();
     }
 
     @Override

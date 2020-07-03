@@ -2,15 +2,16 @@ package com.xipu.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class TileActor extends Actor implements CanCollide {
 
-    private GraphicsComponent graphicsComponent;
+    private TileGraphicsComponent graphicsComponent;
     private CollisionComponent collisionComponent;
 
     public TileActor(String path) {
-        this.graphicsComponent = new GraphicsComponent(this, fix(path));
+        this.graphicsComponent = new TileGraphicsComponent(this, fix(path));
     }
 
     public void test(){
@@ -25,12 +26,15 @@ public class TileActor extends Actor implements CanCollide {
     }
 
     @Override
+    protected void positionChanged() {
+//        super.positionChanged();
+        graphicsComponent.setPosition(getX(), getY());
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         graphicsComponent.draw(batch);
         this.setDebug(true);
-        ShapeRenderer shape = new ShapeRenderer();
-        shape.begin(ShapeRenderer.ShapeType.Line);
-        this.drawDebugBounds(shape);
     }
 
     public void onCollide(){
@@ -49,6 +53,6 @@ public class TileActor extends Actor implements CanCollide {
 
     @Override
     public CollisionComponent getCollisionComponent() {
-        return null;
+        return new CollisionComponent(this, true, new Rectangle());
     }
 }

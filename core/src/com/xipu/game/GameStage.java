@@ -41,6 +41,7 @@ public class GameStage extends Stage {
     public boolean keyDown(int keyCode) {
         switch (keyCode){
             case Input.Keys.ESCAPE:
+
                 System.exit(0);
 //                Gdx.app.exit();
                 break;
