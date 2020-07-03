@@ -1,9 +1,9 @@
 package com.xipu.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.xipu.game.actors.TileActor;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,8 +1,10 @@
-package com.xipu.game;
+package com.xipu.game.components;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.xipu.game.CanCollide;
+import com.xipu.game.actors.PlayerActor;
 
 
 public class CollisionComponent {

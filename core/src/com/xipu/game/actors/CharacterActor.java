@@ -1,9 +1,13 @@
-package com.xipu.game;
+package com.xipu.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.xipu.game.*;
+import com.xipu.game.components.CharacterGraphicsComponent;
+import com.xipu.game.components.CollisionComponent;
+import com.xipu.game.components.InputComponent;
+import com.xipu.game.components.PlayerInputComponent;
 
 public abstract class CharacterActor extends Actor implements CanCollide {
 
@@ -46,11 +50,11 @@ public abstract class CharacterActor extends Actor implements CanCollide {
         collisionComponent.moveCollisionAreaBy(x, y);
     }
 
-    void stopAnimation(PlayerInputComponent.DIRECTION direction) {
+    public void stopAnimation(PlayerInputComponent.DIRECTION direction) {
         graphicsComponent.resetToFirstFrame(direction);
     }
 
-    void runAnimation(float dt, PlayerInputComponent.DIRECTION direction) {
+    public void runAnimation(float dt, PlayerInputComponent.DIRECTION direction) {
         graphicsComponent.update(dt, direction);
     }
 

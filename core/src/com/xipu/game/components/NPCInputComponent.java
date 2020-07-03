@@ -1,8 +1,10 @@
-package com.xipu.game;
+package com.xipu.game.components;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.xipu.game.MouseInteractable;
+import com.xipu.game.actors.NPCActor;
 
 public class NPCInputComponent extends InputComponent implements MouseInteractable {
 
@@ -13,7 +15,7 @@ public class NPCInputComponent extends InputComponent implements MouseInteractab
     }
 
     @Override
-    void update(float dt) {
+    public void update(float dt) {
 
     }
 

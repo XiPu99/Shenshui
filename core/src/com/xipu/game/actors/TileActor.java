@@ -1,9 +1,12 @@
-package com.xipu.game;
+package com.xipu.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.xipu.game.CanCollide;
+import com.xipu.game.components.CollisionComponent;
+import com.xipu.game.components.PlayerInputComponent;
+import com.xipu.game.components.TileGraphicsComponent;
 
 public class TileActor extends Actor implements CanCollide {
 

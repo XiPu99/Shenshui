@@ -2,19 +2,15 @@ package com.xipu.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.xipu.game.actors.NPCActor;
+import com.xipu.game.actors.PlayerActor;
+import com.xipu.game.actors.TileActor;
 
 import java.util.List;
-import java.util.Map;
 
 public class MyGame extends ApplicationAdapter {
 

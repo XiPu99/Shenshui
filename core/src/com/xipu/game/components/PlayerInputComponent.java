@@ -1,8 +1,12 @@
-package com.xipu.game;
+package com.xipu.game.components;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.xipu.game.GUI;
+import com.xipu.game.MouseInteractable;
+import com.xipu.game.StageUtility;
+import com.xipu.game.actors.PlayerActor;
 
 public class PlayerInputComponent extends InputComponent implements MouseInteractable {
 

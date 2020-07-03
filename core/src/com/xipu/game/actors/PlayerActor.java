@@ -1,4 +1,8 @@
-package com.xipu.game;
+package com.xipu.game.actors;
+
+import com.xipu.game.components.CollisionComponent;
+import com.xipu.game.Observer;
+import com.xipu.game.components.PlayerInputComponent;
 
 import java.util.List;
 

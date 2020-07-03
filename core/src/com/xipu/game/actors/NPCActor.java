@@ -1,7 +1,10 @@
-package com.xipu.game;
+package com.xipu.game.actors;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.xipu.game.components.CollisionComponent;
+import com.xipu.game.components.NPCInputComponent;
+import com.xipu.game.components.PlayerInputComponent;
 
 public class NPCActor extends CharacterActor {
 

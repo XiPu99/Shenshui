@@ -1,14 +1,12 @@
-package com.xipu.game;
+package com.xipu.game.components;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class CharacterGraphicsComponent extends GraphicsComponent{
+public class CharacterGraphicsComponent extends GraphicsComponent {
     public static final int SPRITE_SHEET_COL_NUMS = 4;
     public static final int SPRITE_SHEET_ROW_NUMS = 4;
     public static final float DEFAULT_FRAME_DURATION = 0.25f;
@@ -37,7 +35,7 @@ public class CharacterGraphicsComponent extends GraphicsComponent{
         currentFrame = new Sprite(tmp[0][0]);
     }
 
-    void update(float dt, PlayerInputComponent.DIRECTION direction) {
+    public void update(float dt, PlayerInputComponent.DIRECTION direction) {
         stateTime += dt;
         if (stateTime >= 1f) stateTime = 0f;
         setKeyFrameByStateTime(direction);
@@ -67,7 +65,7 @@ public class CharacterGraphicsComponent extends GraphicsComponent{
         return walkAnimation;
     }
 
-    void resetToFirstFrame(PlayerInputComponent.DIRECTION direction) {
+    public void resetToFirstFrame(PlayerInputComponent.DIRECTION direction) {
         stateTime = 0;
         setKeyFrameByStateTime(direction);
     }

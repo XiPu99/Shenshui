@@ -1,4 +1,4 @@
-package com.xipu.game;
+package com.xipu.game.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,27 +31,27 @@ public abstract class GraphicsComponent {
         this.currentFrame = new Sprite(texture);
     }
 
-    void setPosition(float x, float y) {
+    public void setPosition(float x, float y) {
         currentFrame.setPosition(x, y);
     }
 
-    void draw(Batch batch) {
+    public void draw(Batch batch) {
         currentFrame.draw(batch);
     }
 
-    float getX() {
+    public float getX() {
         return currentFrame.getX();
     }
 
-    float getY() {
+    public float getY() {
         return currentFrame.getY();
     }
 
-    float getWidth() {
+    public float getWidth() {
         return currentFrame.getWidth() * DEFAULT_SCALE;
     }
 
-    float getHeight() {
+    public float getHeight() {
         return currentFrame.getHeight() * DEFAULT_SCALE;
     }
 

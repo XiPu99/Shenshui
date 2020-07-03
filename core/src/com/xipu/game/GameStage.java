@@ -1,11 +1,10 @@
 package com.xipu.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.xipu.game.actors.PlayerActor;
+import com.xipu.game.actors.TileActor;
 
 import java.util.HashMap;
 import java.util.List;

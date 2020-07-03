@@ -1,4 +1,4 @@
-package com.xipu.game;
+package com.xipu.game.components;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -7,6 +7,6 @@ public abstract class InputComponent extends InputListener{
 
     Actor actor;
 
-    abstract void update(float dt);
+    public abstract void update(float dt);
 
 }
