@@ -7,12 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class CharacterActor extends Actor implements CanCollide {
 
-    protected GraphicsComponent graphicsComponent;
+    protected CharacterGraphicsComponent graphicsComponent;
     protected InputComponent inputComponent;
     protected CollisionComponent collisionComponent;
 
     public CharacterActor(String path) {
-        graphicsComponent = new GraphicsComponent(this, path);
+        graphicsComponent = new CharacterGraphicsComponent(this, path);
         collisionComponent = new CollisionComponent(this, true,
                 new Rectangle(
                         graphicsComponent.getX(),
@@ -27,7 +27,6 @@ public abstract class CharacterActor extends Actor implements CanCollide {
     protected void positionChanged() {
         graphicsComponent.setPosition(getX(), getY());
         collisionComponent.setCollisionAreaPosition(getX(), getY());
-        super.positionChanged();
     }
 
     @Override

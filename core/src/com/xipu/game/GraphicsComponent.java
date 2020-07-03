@@ -2,77 +2,33 @@ package com.xipu.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-class GraphicsComponent {
-    public static final int SPRITE_SHEET_COL_NUMS = 4;
-    public static final int SPRITE_SHEET_ROW_NUMS = 4;
-    public static final float DEFAULT_FRAME_DURATION = 0.25f;
+public abstract class GraphicsComponent {
     public static final int DEFAULT_SCALE = 3;
-    Texture walkSheet;
-    Sprite currentFrame;
-    Animation<TextureRegion> downWalkAnimation;
-    Animation<TextureRegion> leftWalkAnimation;
-    Animation<TextureRegion> rightWalkAnimation;
-    Animation<TextureRegion> upWalkAnimation;
-    float stateTime = 0; // time used for determining which frame to draw in the sprite sheet
-    Actor parentActor;
+    protected Sprite currentFrame;
+    protected Actor parentActor;
 
+    /**
+     * @param parentActor Actor object that this {@link GraphicsComponent} is attached to
+     */
     public GraphicsComponent(Actor parentActor, String path) {
         this.parentActor = parentActor;
-        walkSheet = new Texture(Gdx.files.internal(path));
-        TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-                walkSheet.getWidth() / SPRITE_SHEET_COL_NUMS,
-                walkSheet.getHeight() / SPRITE_SHEET_ROW_NUMS);
-
-        currentFrame = new Sprite(tmp[0][0]);
-        currentFrame.setOrigin(0, 0);
-        currentFrame.setScale(DEFAULT_SCALE);
-        downWalkAnimation = new Animation<>(DEFAULT_FRAME_DURATION, tmp[0]);
-        rightWalkAnimation = new Animation<>(DEFAULT_FRAME_DURATION, tmp[1]);
-        upWalkAnimation = new Animation<>(DEFAULT_FRAME_DURATION, tmp[2]);
-        leftWalkAnimation = new Animation<>(DEFAULT_FRAME_DURATION, tmp[3]);
-
-        parentActor.setBounds(getX(), getY(), getWidth(), getHeight());
+        Texture texture = new Texture(Gdx.files.internal(path));
+        processTexture(texture);
+        this.currentFrame.setOrigin(0, 0);
+        this.currentFrame.setScale(DEFAULT_SCALE);
+        this.parentActor.setBounds(getX(), getY(), getWidth(), getHeight());
     }
 
-    void update(float dt, PlayerInputComponent.DIRECTION direction) {
-        stateTime += dt;
-        if (stateTime >= 1f) stateTime = 0f;
-        setKeyFrameByStateTime(direction);
-    }
-
-    private void setKeyFrameByStateTime(PlayerInputComponent.DIRECTION direction) {
-        Animation<TextureRegion> walkAnimation = getWalkAnimationByDirection(direction);
-        currentFrame.setRegion(walkAnimation.getKeyFrame(stateTime, true));
-    }
-
-    private Animation<TextureRegion> getWalkAnimationByDirection(PlayerInputComponent.DIRECTION direction){
-        Animation<TextureRegion> walkAnimation;
-
-        switch (direction){
-            case LEFT:
-                walkAnimation = leftWalkAnimation;
-                break;
-            case RIGHT:
-                walkAnimation = rightWalkAnimation;
-                break;
-            case UP:
-                walkAnimation = upWalkAnimation;
-                break;
-            default:
-                walkAnimation = downWalkAnimation;
-        }
-        return walkAnimation;
-    }
-
-    void resetToFirstFrame(PlayerInputComponent.DIRECTION direction) {
-        stateTime = 0;
-        setKeyFrameByStateTime(direction);
+    /**
+     * This method will be called in the constructor.
+     * Child class can override this methods to have custom logic.
+     */
+    void processTexture(Texture texture){
+        this.currentFrame = new Sprite(texture);
     }
 
     void setPosition(float x, float y) {

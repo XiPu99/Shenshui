@@ -22,15 +22,12 @@ public final class JSONParser {
 
         int tileWidth = jsonValue.getInt(JSON_TILE_WIDTH_NAME);
         int tileHeight = jsonValue.getInt(JSON_TILE_HEIGHT_NAME);
-//        System.out.println(tileWidth);
-//        System.out.println(tileHeight);
 
         JsonValue mapInfo = jsonValue.getChild(JSON_MAP_NAME);
         List<TileActor> list = new ArrayList<>();
         int x = 0, y = 0;
         while (mapInfo != null) {
             int[] arr = mapInfo.asIntArray();
-//            System.out.println(Arrays.toString(arr));
             List<TileActor> row =  Arrays.stream(arr)
                     .mapToObj(JSONParser::buildTile)
                     .collect(Collectors.toCollection(LinkedList::new));
@@ -44,14 +41,12 @@ public final class JSONParser {
             y += 16 * 3;
             x = 0;
         }
-//        System.out.println;
         return list;
     }
 
 
     private static TileActor buildTile(int tag){
         TileActor ret = new TileActor("floor.png");
-//        ret.setPosition(0, 0);
         return ret;
     }
 
@@ -80,12 +75,6 @@ public final class JSONParser {
             }
             items = items.next();
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println("WTF");
-//        loadMapFromJSON("test.json");
-//        JSONParser.loadMapFromJSON("test.json");
     }
 
 }
