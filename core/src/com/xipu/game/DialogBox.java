@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 
-import java.awt.*;
 
 public class DialogBox extends Actor {
 
@@ -33,7 +32,7 @@ public class DialogBox extends Actor {
         stack.setWidth(0.7f * Gdx.graphics.getWidth());
         Image bg = new Image(StageUtility.loadTextureFromPath("bg.png"));
         stack.add(bg);
-        stack.setX(100);
+        GUI.centerHorizontally(stack);
         Image image = new Image(StageUtility.loadTextureFromPath("portrait.png"));
         overlay = new Table();
 //        overlay.setDebug(true);
@@ -46,7 +45,6 @@ public class DialogBox extends Actor {
 //		generator.generateData(24, "hds", false);
 		parameter.size = 20;
 //        generator.gene
-////		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/ui/fangzheng.ttf"));
         BitmapFont font = generator.generateFont(parameter);
         generator.dispose();
         text = "你好我是谁？";
@@ -57,14 +55,9 @@ public class DialogBox extends Actor {
         label.setAlignment(Align.topLeft);
         label.setDebug(true);
         float width = overlay.add(label).expandX().left().top().fill().spaceLeft(40).getMaxWidth();
-        System.out.println(width);
-
-
         stack.add(overlay);
         stack.setDebug(true);
         this.setDebug(true);
-
-
     }
 
     @Override
@@ -77,8 +70,6 @@ public class DialogBox extends Actor {
             displayOneMoreCharacterIfPossible();
         }
     }
-
-
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -99,14 +90,6 @@ public class DialogBox extends Actor {
         shapeRenderer.end();
         stack.draw(batch, parentAlpha);
 
-//        batch.end();
-//        batch.begin();
-//
-//        shapeRenderer.begin();
-//        label.drawDebug(shapeRenderer);
-//        shapeRenderer.end();
-//        batch.end();
-//        stack.drawDebug(new ShapeRenderer(ShapeRenderer.ShapeType.Filled));
     }
 
     private boolean displayFinished() {

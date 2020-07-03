@@ -49,9 +49,6 @@ public class MyGame extends ApplicationAdapter {
 //		GUI.stage = stage;
 //		GUI.showDialog(stage);
 
-
-
-
 //		GUI.showTextInput(stage);
 //		System.out.println(map);
 	}

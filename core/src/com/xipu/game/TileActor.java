@@ -34,7 +34,6 @@ public class TileActor extends Actor implements CanCollide {
     public void draw(Batch batch, float parentAlpha) {
         graphicsComponent.draw(batch);
         this.setDebug(true);
-        System.out.println(this.getScaleX());
     }
 
     public void onCollide(){

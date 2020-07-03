@@ -30,7 +30,6 @@ public class PlayerInputComponent extends InputComponent implements MouseInterac
 
     @Override
     public void onRightClick() {
-        System.out.println("Clicked");
         GUI.showDialog(myActor.getStage());
         disableMovement();
         reset();
