@@ -1,0 +1,22 @@
+[
+	{
+		"title": "Start",
+		"tags": "",
+		"body": "你好 [[Answer:Node1|Node1]]",
+		"position": {
+			"x": 604,
+			"y": 155
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Node1",
+		"tags": "",
+		"body": "What's going on?",
+		"position": {
+			"x": 301,
+			"y": 381
+		},
+		"colorID": 0
+	}
+]

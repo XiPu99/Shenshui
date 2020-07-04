@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.kyper.yarn.Library;
+import com.kyper.yarn.Value;
 import com.xipu.game.actors.NPCActor;
 import com.xipu.game.actors.PlayerActor;
 import com.xipu.game.actors.TileActor;
+import com.kyper.yarn.Dialogue;
 
 import java.util.List;
 
@@ -21,6 +24,7 @@ public class MyGame extends ApplicationAdapter {
 	StringBuilder sb = new StringBuilder();
 	float stateTime = 0;
 	private int index;
+	Dialogue dialogue;
 
 	@Override
 	public void create () {
@@ -42,6 +46,23 @@ public class MyGame extends ApplicationAdapter {
 		actor.setPosition(100, 100);
 //		System.out.println(stage.screenToStageCoordinates(actor.get));
 
+		DialogueData data = new DialogueData("test_data");
+		dialogue = new Dialogue(data);
+		dialogue.getLibrary().registerFunction("setAction", 1, new Library.Function() {
+			@Override
+			public void invoke(Value... params) {
+				Value action = params[0];
+
+				if(!action.getStringValue().isEmpty()){
+					System.out.println("Getting string from yarn!!!");
+				}
+
+			}
+		});
+
+		dialogue.loadFile("dialog.json");
+		dialogue.start();
+
 //		GUI.stage = stage;
 //		GUI.showDialog(stage);
 
@@ -60,6 +81,11 @@ public class MyGame extends ApplicationAdapter {
 //		}
 //		stage.setDebugAll(true);
 		stage.draw();
+
+		if (dialogue.isNextLine()){
+			Dialogue.LineResult lineResult = dialogue.getNextAsLine();
+			System.out.println(lineResult.getText());
+		}
 
 	}
 	
