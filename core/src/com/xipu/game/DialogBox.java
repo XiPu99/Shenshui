@@ -6,58 +6,71 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.kyper.yarn.Dialogue;
 
 
 public class DialogBox extends Actor {
 
-    Stack stack;
-    String text;
-    StringBuilder sb = new StringBuilder();
-    Label label;
-    Table overlay;
+    private static final float TEXT_ANIMATION_FREQUENCY = 0.05f;
+    private static final float DIALOG_BOX_WIDTH_PROPORTION = 0.7f;
+    private static final int DEFAULT_FONT_SIZE = 20;
+    private static final String DEFAULT_FONT_FILE_PATH = "Zpix.ttf";
+    private static final String EMPTY_STRING = "";
+    private Stack stack;
+    private String currentDialogText;
+    private StringBuilder displayedCharactersSoFar = new StringBuilder();
+    private Label dialogTextArea;
     private float stateTime;
-    private final static float TEXT_ANIMATION_FREQUENCY = 0.05f;
-    private int textIndex = 0;
-    private String test = "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
+    private int caretIndex = 0;
+    private Dialogue dialogue;
 
-    public DialogBox() {
+    public DialogBox(Stage stage) {
+        // load dialog
+        DialogueData data = new DialogueData("test_dialog_box");
+        this.dialogue = new Dialogue(data);
+        this.dialogue.loadFile("dialog.json");
+
+        // set up dialog box UI widget
         stack = new Stack();
-        stack.setWidth(0.7f * Gdx.graphics.getWidth());
+        stack.setWidth(DIALOG_BOX_WIDTH_PROPORTION * Gdx.graphics.getWidth());
         Image bg = new Image(StageUtility.loadTextureFromPath("bg.png"));
         stack.add(bg);
         GUI.centerHorizontally(stack);
+
+        // use table to organize the layout of the portrait and the dialog text area
+        Table overlay = new Table();
+        // add character portrait
         Image image = new Image(StageUtility.loadTextureFromPath("portrait.png"));
-        overlay = new Table();
-//        overlay.setDebug(true);
-//        overlay = overlay.debugTable();
         overlay.add(image).left().padLeft(30).width(100).height(100).center();
-        Skin uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zpix.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.characters="你好我是谁？";
-//		generator.generateData(24, "hds", false);
-		parameter.size = 20;
-//        generator.gene
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
-        text = "你好我是谁？";
-//        label = new Label("", uiSkin);
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.BLACK);
-        label = new Label("", labelStyle);
-        label.setWrap(true);
-        label.setAlignment(Align.topLeft);
-        label.setDebug(true);
-        float width = overlay.add(label).expandX().left().top().fill().spaceLeft(40).getMaxWidth();
+        // add dialog text area
+        Label.LabelStyle labelStyle = new Label.LabelStyle(generateBitMapFontFromCharacters(FreeTypeFontGenerator.DEFAULT_CHARS), Color.BLACK);
+        dialogTextArea = new Label(EMPTY_STRING, labelStyle);
+        dialogTextArea.setWrap(true);
+        dialogTextArea.setAlignment(Align.topLeft);
+        dialogTextArea.setDebug(true);
+        overlay.add(dialogTextArea).expandX().left().top().fill().spaceLeft(40);
         stack.add(overlay);
         stack.setDebug(true);
         this.setDebug(true);
+
+        this.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                updateDialogue();
+                return true;
+            }
+        });
+
+        // need to set bounds here so that the click listener can fire when there is mouse click within the bound
+        this.setBounds(stack.getX(), stack.getY(), stack.getWidth(), stack.getHeight());
+
+        startDialog(); // start getting the first line from the dialogue
     }
 
     @Override
@@ -71,36 +84,85 @@ public class DialogBox extends Actor {
         }
     }
 
+    private void startDialog(){
+        this.dialogue.start();
+        updateDialogue();
+    }
+
+    private void resetDialogText() {
+        dialogTextArea.setText(EMPTY_STRING);
+        dialogTextArea.setStyle(new Label.LabelStyle(generateBitMapFontFromCharacters(currentDialogText), Color.BLACK));
+        caretIndex = 0;
+        displayedCharactersSoFar.setLength(0);
+    }
+
+    private BitmapFont generateBitMapFontFromCharacters(String characters) {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(DEFAULT_FONT_FILE_PATH));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.characters = characters;
+        parameter.size = DEFAULT_FONT_SIZE;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+        return font;
+    }
+
+    void updateDialogue() {
+        if (!dialogue.isRunning()) {
+            throw new RuntimeException("Still updating dialogue when it's already stopped");
+        }
+
+        if (dialogue.isNextLine()) {
+            Dialogue.LineResult lineResult = dialogue.getNextAsLine();
+            currentDialogText = lineResult.getText();
+            System.out.println(currentDialogText);
+            resetDialogText();
+        } else if (dialogue.isNextCommand()) {
+            System.out.println("Command!");
+        } else if (dialogue.isNextOptions()) {
+            Dialogue.OptionResult optionResult = dialogue.getNextAsOptions();
+            optionResult.choose(0);
+        } else if (dialogue.isNextComplete()) {
+            Dialogue.NodeCompleteResult completeResult = dialogue.getNextAsComplete();
+            if (completeResult.next_node == null){
+                System.out.println("Dialog ends!");
+                dialogue.stop();
+                this.setVisible(false);
+            } else{
+                updateDialogue();
+            }
+        } else {
+            throw new RuntimeException("Invalid dialogue's next content");
+        }
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
 //        super.draw(batch, parentAlpha);
 //        stack.setDebug(true, true);
-        stack.debugAll();
+//        stack.debugAll();
 //        overlay.setDebug(true);
-//        overlay.debug();
-//        overlay.drawDebugBo
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        stack.drawDebug(shapeRenderer);
-        overlay.debugAll();
+//        stack.drawDebug(shapeRenderer);
+//        overlay.debugAll();
 //        overlay.drawDebug(shapeRenderer);
 
 
 //        label.drawDebug(shapeRenderer);
         shapeRenderer.end();
         stack.draw(batch, parentAlpha);
-
     }
 
     private boolean displayFinished() {
-        return textIndex >= text.length();
+        return caretIndex >= currentDialogText.length();
     }
 
-    private void displayOneMoreCharacterIfPossible(){
-        if(displayFinished()){
+    private void displayOneMoreCharacterIfPossible() {
+        if (displayFinished()) {
             return;
         }
-        sb.append(text.charAt(textIndex++));
-        label.setText(sb.toString());
+        displayedCharactersSoFar.append(currentDialogText.charAt(caretIndex++));
+        dialogTextArea.setText(displayedCharactersSoFar.toString());
     }
+
 }

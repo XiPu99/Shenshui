@@ -2,7 +2,7 @@
 	{
 		"title": "Start",
 		"tags": "",
-		"body": "你好 [[Answer:Node1|Node1]]",
+		"body": "你好\n今天是第一天！\n一定要好好表现。[[Node1]]",
 		"position": {
 			"x": 604,
 			"y": 155
@@ -12,7 +12,7 @@
 	{
 		"title": "Node1",
 		"tags": "",
-		"body": "What's going on?",
+		"body": "What's going on?\n",
 		"position": {
 			"x": 301,
 			"y": 381

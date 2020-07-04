@@ -44,30 +44,23 @@ public class MyGame extends ApplicationAdapter {
 		stage.addActor(npcActor);
 		stage.setKeyboardFocus(actor);
 		actor.setPosition(100, 100);
-//		System.out.println(stage.screenToStageCoordinates(actor.get));
 
 		DialogueData data = new DialogueData("test_data");
 		dialogue = new Dialogue(data);
-		dialogue.getLibrary().registerFunction("setAction", 1, new Library.Function() {
+		dialogue.getLibrary().registerFunction("setSallyAction", 1, new Library.Function() {
 			@Override
 			public void invoke(Value... params) {
 				Value action = params[0];
 
 				if(!action.getStringValue().isEmpty()){
 					System.out.println("Getting string from yarn!!!");
+					System.out.println(action.getStringValue());
 				}
 
 			}
 		});
 
 		dialogue.loadFile("dialog.json");
-		dialogue.start();
-
-//		GUI.stage = stage;
-//		GUI.showDialog(stage);
-
-//		GUI.showTextInput(stage);
-//		System.out.println(map);
 	}
 
 	@Override
@@ -85,6 +78,23 @@ public class MyGame extends ApplicationAdapter {
 		if (dialogue.isNextLine()){
 			Dialogue.LineResult lineResult = dialogue.getNextAsLine();
 			System.out.println(lineResult.getText());
+		}
+		else if(dialogue.isNextCommand()){
+			System.out.println("Command!");
+		}
+		else if(dialogue.isNextOptions()){
+			System.out.println("Options!");
+			Dialogue.OptionResult optionResult = dialogue.getNextAsOptions();
+//			System.out.println(optionResult.getOptions().toString());
+			optionResult.choose(0);
+		}
+		else if (dialogue.isNextComplete()){
+//			System.out.println("Complete!");
+//			String s = dialogue.getNextAsComplete().next_node;
+			dialogue.getNextAsComplete();
+//			System.out.print("Next Node: ");
+//			System.out.println(s);
+			dialogue.stop();
 		}
 
 	}

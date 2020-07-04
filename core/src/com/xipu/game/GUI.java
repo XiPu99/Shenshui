@@ -2,13 +2,15 @@ package com.xipu.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class GUI {
     public static void showDialog(Stage stage) {
-        DialogBox dialogBox = new DialogBox();
+        DialogBox dialogBox = new DialogBox(stage);
         // TODO: add a getter method to get current stage
         stage.addActor(dialogBox);
     }
